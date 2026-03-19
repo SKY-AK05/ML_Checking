@@ -12,7 +12,10 @@ app = Flask(__name__,
             static_folder=os.path.join(ROOT_DIR, 'static'))
 
 # Update Constants with absolute paths
-EXCEL_FILE = os.path.join(ROOT_DIR, "final_QA_report.xlsx")
+API_DIR = os.path.dirname(os.path.abspath(__file__))
+EXCEL_FILE_IN_API = os.path.join(API_DIR, "final_QA_report.xlsx")
+EXCEL_FILE_IN_ROOT = os.path.join(ROOT_DIR, "final_QA_report.xlsx")
+EXCEL_FILE = EXCEL_FILE_IN_API if os.path.exists(EXCEL_FILE_IN_API) else EXCEL_FILE_IN_ROOT
 IMAGE_STORAGE = os.path.join(ROOT_DIR, "static", "images")
 
 def read_excel_sheet(sheet_name):

@@ -1,7 +1,7 @@
 {
   "functions": {
     "api/*.py": {
-      "includeFiles": ["final_QA_report.xlsx", "static/images/**"]
+      "includeFiles": "static/images/**"
     }
   },
   "rewrites": [

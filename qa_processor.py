@@ -11,7 +11,7 @@ import shutil
 ZIP_FOLDER = "annotations"
 EXTRACTED_FOLDER = "extracted_xmls"
 IMAGE_STORAGE = os.path.join("static", "images")
-EXCEL_FILE = "final_QA_report.xlsx"
+EXCEL_FILE = os.path.join("api", "final_QA_report.xlsx")
 
 # Ensure output folders exist
 if os.path.exists(EXTRACTED_FOLDER): shutil.rmtree(EXTRACTED_FOLDER)
