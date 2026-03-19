@@ -55,7 +55,12 @@ def voting():
     raw_data = read_excel_sheet("Voting")
     grouped = defaultdict(list)
     for row in raw_data:
-        img_name = str(row.get("image"))
+        img_raw = row.get("image")
+        if pd.isna(img_raw): continue
+        
+        img_name = str(img_raw).strip()
+        if not img_name or img_name.lower() in ["nan", "none"]: continue
+        
         row["img_url"] = find_image_path(img_name)
         grouped[img_name].append(row)
     
