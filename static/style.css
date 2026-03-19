@@ -43,7 +43,7 @@ nav.sidebar {
 .main-content {
     flex: 1;
     margin-left: 260px;
-    padding: 2rem 4rem; /* Reduced top padding for the top-nav bar */
+    padding: 0.5rem 4rem; /* Significantly reduced top padding */
     min-width: 0;
 }
 
@@ -258,6 +258,7 @@ img.thumb {
 .top-nav {
     display: flex;
     justify-content: flex-end;
+    margin-top: 2rem; /* Brings the download button down */
     margin-bottom: 2rem;
 }
 
