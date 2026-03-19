@@ -102,8 +102,8 @@ nav.sidebar {
     transition: all 0.2s;
     box-shadow: var(--shadow-sm);
     display: grid;
-    /* Balanced: Pic (80) | Name (220) | Summary (1fr) | Count (120) | Arrow (50) */
-    grid-template-columns: 80px 220px 1fr 150px 50px;
+    /* Balanced: # (40) | Pic (80) | Name (220) | Summary (1fr) | Count (150) | Arrow (50) */
+    grid-template-columns: 40px 80px 220px 1fr 150px 50px;
     align-items: center;
     padding: 1rem 1.5rem;
     gap: 1rem;

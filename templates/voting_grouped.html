@@ -33,7 +33,8 @@
 
 <div class="image-list-container">
     <!-- List Header Legend - MATCHING GRID WITH GAP -->
-    <div style="display: grid; grid-template-columns: 80px 220px 1fr 150px 50px; padding: 0 1.5rem; margin-bottom: 1rem; gap: 1rem; color: #aaa; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">
+    <div style="display: grid; grid-template-columns: 40px 80px 220px 1fr 150px 50px; padding: 0 1.5rem; margin-bottom: 1rem; gap: 1rem; color: #aaa; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">
+        <div>#</div>
         <div>Preview</div>
         <div>Filename</div>
         <div>Consensus Summary</div>
@@ -45,6 +46,7 @@
     <div class="image-group" style="margin-bottom: 1.5rem;">
         <!-- Header Row -->
         <div class="image-row-header" onclick="toggleDetails('details-{{ loop.index }}')">
+            <div style="font-weight: 800; color: #ccc; font-size: 0.85rem;">{{ (page - 1) * 50 + loop.index }}.</div>
             <div class="img-thumb">
                 {% if img.img_url %}
                     <img src="{{ img.img_url }}" loading="lazy" style="width: 60px; height: 45px; object-fit: cover; border-radius: 8px; cursor: pointer;" onclick="event.stopPropagation(); window.openImage({{ loop.index0 }})">
