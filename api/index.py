@@ -118,6 +118,10 @@ def review():
         row["img_url"] = find_image_path(row.get("image"))
     return render_template("review.html", tables=data, active_page='review')
 
+@app.route("/plan")
+def plan():
+    return render_template("plan.html", active_page='plan')
+
 @app.route("/download-excel")
 def download_excel():
     if not os.path.exists(EXCEL_FILE):

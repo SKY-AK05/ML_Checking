@@ -1,0 +1,108 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="dashboard-card page-transition" style="max-width: 1000px; margin: 0 auto; padding: 4rem;">
+    <header style="margin-bottom: 4rem; border-bottom: 3px solid var(--accent-purple); padding-bottom: 2rem;">
+        <h1 style="font-size: 3.5rem; font-weight: 800; letter-spacing: -2px; line-height: 1; margin-bottom: 1rem;">
+            🚗 Indian License Plate Recognition <span style="color: var(--accent-purple);">(LPR)</span> System
+        </h1>
+        <p style="font-size: 1.2rem; font-weight: 600; color: #666;">Full Machine Learning Architecture & Execution Plan</p>
+    </header>
+
+    <div class="plan-section" style="margin-bottom: 4rem;">
+        <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 2rem; display: flex; align-items: center; gap: 15px;">
+            <span style="background: black; color: white; padding: 5px 15px; border-radius: 10px;">01</span> Project Overview
+        </h2>
+        <div style="background: #f9f9f9; padding: 2rem; border-radius: 20px; border: 1.5px solid black; box-shadow: 8px 8px 0px black;">
+            <h3 style="font-weight: 800; margin-bottom: 1rem;">1.1 Objective</h3>
+            <p style="line-height: 1.6; font-weight: 500;">Build a robust, scalable system capable of detecting license plates in real-world conditions, extracting regions accurately, and recognizing characters in real-time.</p>
+            
+            <h3 style="font-weight: 800; margin-top: 2rem; margin-bottom: 1rem;">1.2 Problem Breakdown</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                <div style="background: white; border: 1.5px solid black; padding: 1.5rem; border-radius: 15px;">
+                    <strong style="color: var(--accent-purple);">1. Object Detection</strong><br>Locate license plate
+                </div>
+                <div style="background: white; border: 1.5px solid black; padding: 1.5rem; border-radius: 15px;">
+                    <strong style="color: var(--accent-purple);">2. OCR</strong><br>Read plate text
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="plan-section" style="margin-bottom: 4rem;">
+        <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 2rem; display: flex; align-items: center; gap: 15px;">
+            <span style="background: black; color: white; padding: 5px 15px; border-radius: 10px;">02</span> Core Concepts
+        </h2>
+        <table style="width: 100%; border-collapse: separate; border-spacing: 0 10px;">
+            <thead>
+                <tr>
+                    <th style="padding: 1rem; background: #eee; border-radius: 10px 0 0 10px; border: 1.5px solid black; border-right: none;">Task</th>
+                    <th style="padding: 1rem; background: #eee; border: 1.5px solid black; border-right: none;">Goal</th>
+                    <th style="padding: 1rem; background: #eee; border: 1.5px solid black; border-right: none;">Input</th>
+                    <th style="padding: 1rem; background: #eee; border-radius: 0 10px 10px 0; border: 1.5px solid black;">Output</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="padding: 1.5rem; border: 1.5px solid black; border-radius: 10px 0 0 10px; font-weight: 700;">Detection</td>
+                    <td style="padding: 1.5rem; border: 1.5px solid black; border-left: none;">Find plate</td>
+                    <td style="padding: 1.5rem; border: 1.5px solid black; border-left: none;">Full image</td>
+                    <td style="padding: 1.5rem; border: 1.5px solid black; border-radius: 0 10px 10px 0; border-left: none; font-weight: 700; color: var(--accent-purple);">Bounding box</td>
+                </tr>
+                <tr>
+                    <td style="padding: 1.5rem; border: 1.5px solid black; border-radius: 10px 0 0 10px; font-weight: 700;">OCR</td>
+                    <td style="padding: 1.5rem; border: 1.5px solid black; border-left: none;">Read text</td>
+                    <td style="padding: 1.5rem; border: 1.5px solid black; border-left: none;">Cropped plate</td>
+                    <td style="padding: 1.5rem; border: 1.5px solid black; border-radius: 0 10px 10px 0; border-left: none; font-weight: 700; color: var(--accent-purple);">String</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="plan-section" style="margin-bottom: 4rem;">
+        <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 2rem; display: flex; align-items: center; gap: 15px;">
+            <span style="background: black; color: white; padding: 5px 15px; border-radius: 10px;">03</span> Dataset & Annotation
+        </h2>
+        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+            <div style="border: 2px dashed #ccc; padding: 2rem; border-radius: 20px;">
+                <h4 style="font-weight: 800; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.1em;">Pipeline Flow</h4>
+                <p style="font-family: monospace; font-size: 1.1rem; color: var(--accent-purple); font-weight: 700;">
+                    Raw Images → Annotation → Detection Dataset → Auto Cropping → Cropped Plates → Text Annotation → OCR Dataset
+                </p>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <div style="background: white; border: 1.5px solid black; padding: 2rem; border-radius: 20px; box-shadow: 5px 5px 0px var(--accent-purple);">
+                    <h4 style="font-weight: 800; margin-bottom: 1rem;">Team Roles</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 0.5rem; font-weight: 600;">✅ Team A: Annotation</li>
+                        <li style="margin-bottom: 0.5rem; font-weight: 600;">✅ Team B: Quality Check</li>
+                        <li style="margin-bottom: 0.5rem; font-weight: 600;">✅ Team C: Cropping + Labeling</li>
+                    </ul>
+                </div>
+                <div style="background: white; border: 1.5px solid black; padding: 2rem; border-radius: 20px; box-shadow: 5px 5px 0px var(--accent-lime);">
+                    <h4 style="font-weight: 800; margin-bottom: 1rem;">Evaluation Metrics</h4>
+                    <p style="font-weight: 700; font-size: 1.1rem;">Detection: <span style="color: #666;">mAP @ IoU 0.5</span></p>
+                    <p style="font-weight: 700; font-size: 1.1rem;">OCR: <span style="color: #666;">Character Accuracy</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="plan-section" style="margin-bottom: 4rem;">
+        <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 2rem; display: flex; align-items: center; gap: 15px;">
+            <span style="background: black; color: white; padding: 5px 15px; border-radius: 10px;">04</span> Execution Phases
+        </h2>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+            {% for phase in ['1: Extraction', '2: Detection', '3: Cropping', '4: OCR Phase', '5: Integration', '6: Optimization'] %}
+            <div style="background: black; color: white; padding: 1.5rem; border-radius: 15px; text-align: center; font-weight: 700;">
+                Phase {{ phase }}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <footer style="text-align: center; margin-top: 6rem; padding-top: 2rem; border-top: 1.5px solid #eee;">
+        <p style="font-weight: 800; color: #aaa; text-transform: uppercase; letter-spacing: 0.2em;">Project Blueprints &copy; 2026</p>
+    </footer>
+</div>
+{% endblock %}
