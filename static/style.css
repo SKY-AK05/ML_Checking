@@ -43,8 +43,8 @@ nav.sidebar {
 .main-content {
     flex: 1;
     margin-left: 260px;
-    padding: 3rem 4rem;
-    min-width: 0; /* Prevents flex items from overflowing */
+    padding: 2rem 4rem; /* Reduced top padding for the top-nav bar */
+    min-width: 0;
 }
 
 .logo {
@@ -198,4 +198,78 @@ img.thumb {
     object-fit: cover;
     border-radius: 6px;
     border: 1px solid black;
+}
+
+/* Sidebar Footer & Creator Tag */
+.sidebar-footer {
+    margin-top: auto;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.sidebar-footer p {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent-purple);
+    margin-bottom: 0.4rem;
+}
+
+.sidebar-footer .update-text {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.4);
+}
+
+/* Top Navigation Bar */
+.top-nav {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 2rem;
+}
+
+.download-btn {
+    background: var(--text-dark);
+    color: var(--text-light);
+    text-decoration: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    box-shadow: 4px 4px 0px var(--accent-purple);
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid black;
+}
+
+.download-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px var(--accent-purple);
+}
+
+.download-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0px 0px 0px var(--accent-purple);
+}
+
+/* Smooth Page Transitions */
+.page-transition {
+    animation: fadeInSlide 0.5s ease-out forwards;
+}
+
+@keyframes fadeInSlide {
+    0% {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Smooth hover for all interactive elements */
+a, button, .image-row-header {
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }

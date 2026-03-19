@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, jsonify
+from flask import Flask, render_template, url_for, jsonify, send_file
 import pandas as pd
 import os
 from collections import defaultdict
@@ -77,6 +77,12 @@ def review():
     for row in data:
         row["img_url"] = find_image_path(row.get("image"))
     return render_template("review.html", tables=data, active_page='review')
+
+@app.route("/download-excel")
+def download_excel():
+    if not os.path.exists(EXCEL_FILE):
+        return "File not found", 404
+    return send_file(EXCEL_FILE, as_attachment=True)
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)

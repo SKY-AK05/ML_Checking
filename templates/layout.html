@@ -58,21 +58,24 @@
           >
         </li>
       </ul>
-      <div
-        style="
-          margin-top: auto;
-          padding-top: 2rem;
-          border-top: 1px solid var(--border-color);
-        "
-      >
-        <p style="font-size: 0.75rem; color: var(--text-secondary)">
-          Last updated today
-        </p>
+      <div class="sidebar-footer">
+        <p>Created by SKY</p>
+        <p class="update-text">Last updated today</p>
       </div>
     </nav>
 
     <!-- Main Content -->
-    <main class="main-content">{% block content %}{% endblock %}</main>
+    <main class="main-content">
+      <div class="top-nav">
+        <a href="/download-excel" class="download-btn">
+          <i data-lucide="download"></i>
+          Download Report
+        </a>
+      </div>
+      <div class="page-transition">
+        {% block content %}{% endblock %}
+      </div>
+    </main>
 
     <script>
       // Initialize Lucide icons
