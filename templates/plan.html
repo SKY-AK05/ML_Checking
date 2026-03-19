@@ -2,183 +2,118 @@
 
 {% block content %}
 <div class="dashboard-card page-transition" style="max-width: 1000px; margin: 0 auto; padding: 4rem;">
-    <header style="margin-bottom: 4rem; border-bottom: 3px solid var(--accent-purple); padding-bottom: 2rem;">
-        <h1 style="font-size: 3.5rem; font-weight: 800; letter-spacing: -2px; line-height: 1; margin-bottom: 1rem;">
-            🚗 Indian License Plate Recognition <span style="color: var(--accent-purple);">(LPR)</span> System
-        </h1>
-        <p style="font-size: 1.2rem; font-weight: 600; color: #666;">Full Machine Learning Architecture & Execution Plan</p>
-    </header>
-
-    <!-- SECTION 1: OVERVIEW -->
-    <div class="plan-section" style="margin-bottom: 5rem;">
-        <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 2rem; display: flex; align-items: center; gap: 15px;">
-            <span style="background: black; color: white; padding: 5px 15px; border-radius: 10px;">01</span> Project Overview
-        </h2>
-        <div style="background: #f9f9f9; padding: 2.5em; border-radius: 20px; border: 1.5px solid black; box-shadow: 8px 8px 0px black;">
-            <h3 style="font-weight: 800; margin-bottom: 1rem;">1.1 Objective</h3>
-            <p style="line-height: 1.6; font-weight: 500;">Build a robust, scalable system capable of detecting license plates in real-world conditions, extracting regions accurately, and recognizing characters in real-time or batch pipelines.</p>
-            <h3 style="font-weight: 800; margin-top: 2rem; margin-bottom: 1rem;">1.2 Problem Breakdown</h3>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
-                <div style="background: white; border: 1.5px solid black; padding: 1.5rem; border-radius: 15px;">
-                    <strong style="color: var(--accent-purple);">1. Object Detection</strong><br>Locate license plate
-                </div>
-                <div style="background: white; border: 1.5px solid black; padding: 1.5rem; border-radius: 15px;">
-                    <strong style="color: var(--accent-purple);">2. OCR</strong><br>Read plate text
-                </div>
-            </div>
-            <h3 style="font-weight: 800; margin-top: 2rem; margin-bottom: 1rem;">1.3 System Architecture</h3>
-            <div style="font-family: monospace; background: #eee; padding: 1.5rem; border-radius: 10px; border: 1px solid #ddd; font-size: 0.9rem;">
-                [ Input Image ] → [ Detection Model ] → [ Bounding Box ] → [ Cropping Module ] → [ OCR Model ] → [ Text Output ]
-            </div>
+    <!-- Raw Markdown Content (Hidden) -->
+    <div id="raw-content" style="display: none;">{{ content }}</div>
+    
+    <!-- Rendered content container -->
+    <div id="markdown-viewer" class="markdown-body">
+        <div style="text-align: center; padding: 4rem;">
+            <div class="loader" style="display: inline-block; width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid var(--accent-purple); border-radius: 50%; animation: spin 1s linear infinite;"></div>
+            <p style="margin-top: 1rem; font-weight: 600; color: #888;">Parsing Roadmap...</p>
         </div>
-    </div>
-
-    <!-- SECTION 2: CORE CONCEPTS -->
-    <div class="plan-section" style="margin-bottom: 5rem;">
-        <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 2rem; display: flex; align-items: center; gap: 15px;">
-            <span style="background: black; color: white; padding: 5px 15px; border-radius: 10px;">02</span> Core Concepts
-        </h2>
-        <div style="margin-bottom: 2rem;">
-            <table style="width: 100%; border-collapse: separate; border-spacing: 0 10px;">
-                <thead>
-                    <tr>
-                        <th style="padding: 1rem; background: #eee; border-radius: 10px 0 0 10px; border: 1.5px solid black; border-right: none; font-size: 0.8rem;">TASK</th>
-                        <th style="padding: 1rem; background: #eee; border: 1.5px solid black; border-right: none; font-size: 0.8rem;">GOAL</th>
-                        <th style="padding: 1rem; background: #eee; border: 1.5px solid black; border-right: none; font-size: 0.8rem;">INPUT</th>
-                        <th style="padding: 1rem; background: #eee; border-radius: 0 10px 10px 0; border: 1.5px solid black; font-size: 0.8rem;">OUTPUT</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td style="padding: 1.5rem; border: 1.5px solid black; border-radius: 10px 0 0 10px; font-weight: 700;">Detection</td>
-                        <td style="padding: 1.5rem; border: 1.5px solid black; border-left: none;">Find plate</td>
-                        <td style="padding: 1.5rem; border: 1.5px solid black; border-left: none;">Full image</td>
-                        <td style="padding: 1.5rem; border: 1.5px solid black; border-radius: 0 10px 10px 0; border-left: none; font-weight: 700; color: var(--accent-purple);">Bounding box</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 1.5rem; border: 1.5px solid black; border-radius: 10px 0 0 10px; font-weight: 700;">OCR</td>
-                        <td style="padding: 1.5rem; border: 1.5px solid black; border-left: none;">Read text</td>
-                        <td style="padding: 1.5rem; border: 1.5px solid black; border-left: none;">Cropped plate</td>
-                        <td style="padding: 1.5rem; border: 1.5px solid black; border-radius: 0 10px 10px 0; border-left: none; font-weight: 700; color: var(--accent-purple);">String</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div style="background: white; border-left: 5px solid var(--accent-purple); padding: 2rem; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
-            <h4 style="font-weight: 800; margin-bottom: 1rem;">2.2 Why Two Models?</h4>
-            <ul style="font-weight: 500; line-height: 1.8;">
-                <li>Plate is a <strong>small object</strong> in a large image.</li>
-                <li>OCR requires <strong>clean, focused input</strong> to maintain high accuracy.</li>
-                <li>Separation allows for better modularity, testing, and debugging.</li>
-            </ul>
-        </div>
-    </div>
-
-    <!-- SECTION 3: DATASET & TEAM -->
-    <div class="plan-section" style="margin-bottom: 5rem;">
-        <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 2rem; display: flex; align-items: center; gap: 15px;">
-            <span style="background: black; color: white; padding: 5px 15px; border-radius: 10px;">03</span> Dataset & Workflow
-        </h2>
-        <div style="display: flex; flex-direction: column; gap: 2rem;">
-            <div style="border: 2px dashed #999; padding: 2.5rem; border-radius: 20px; text-align: center;">
-                <h4 style="font-weight: 800; margin-bottom: 1rem; color: var(--accent-purple);">3.2 DATA PIPELINE</h4>
-                <p style="font-family: monospace; font-size: 1rem; font-weight: 700;">
-                    Raw Images → Annotation → Detection Dataset → Auto Cropping → Cropped Plates → OCR Annotation
-                </p>
-            </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-                <div style="background: white; border: 1.5px solid black; padding: 2rem; border-radius: 20px; box-shadow: 6px 6px 0px black;">
-                    <h4 style="font-weight: 800; margin-bottom: 1.5rem;">5.1 Role Distribution</h4>
-                    <div style="display: flex; flex-direction: column; gap: 10px; font-weight: 600;">
-                        <span style="background: #eee; padding: 10px 15px; border-radius: 8px;">👤 Team A: Annotation</span>
-                        <span style="background: #eee; padding: 10px 15px; border-radius: 8px;">🔍 Team B: Quality Check</span>
-                        <span style="background: #eee; padding: 10px 15px; border-radius: 8px;">✂️ Team C: Cropping + Labeling</span>
-                        <span style="background: #eee; padding: 10px 15px; border-radius: 8px;">✅ Team D: Validation</span>
-                    </div>
-                </div>
-                <div style="background: white; border: 1.5px solid black; padding: 2rem; border-radius: 20px; box-shadow: 6px 6px 0px var(--accent-purple);">
-                    <h4 style="font-weight: 800; margin-bottom: 1.5rem;">4.2 Annotation Rules</h4>
-                    <ul style="font-weight: 500; padding-left: 1.2rem; line-height: 1.8;">
-                        <li><strong>Tight Bounding Box</strong>: No extra background.</li>
-                        <li><strong>Full Plate</strong>: Ensure all characters are inside.</li>
-                        <li><strong>Accuracy</strong>: Carefully distinguish 'O' vs '0'.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- SECTION 4: THE MODELS -->
-    <div class="plan-section" style="margin-bottom: 5rem;">
-        <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 2rem; display: flex; align-items: center; gap: 15px;">
-            <span style="background: black; color: white; padding: 5px 15px; border-radius: 10px;">04</span> Detection & OCR Models
-        </h2>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
-            <div>
-                <h3 style="font-weight: 800; border-bottom: 2px solid black; padding-bottom: 10px; margin-bottom: 1.5rem;">6. Detection Model</h3>
-                <p><strong>Options:</strong> YOLO (Recommended), FCOS, Faster R-CNN</p>
-                <p><strong>Evaluation:</strong> mAP (mean Average Precision)</p>
-                <div style="margin-top: 1rem; background: #fffbe6; padding: 1.5rem; border: 1px solid #ffe58f; border-radius: 10px; font-weight: 600;">
-                    💡 Focus on Tight BBoxes to improve accuracy for the next phase.
-                </div>
-            </div>
-            <div>
-                <h3 style="font-weight: 800; border-bottom: 2px solid black; padding-bottom: 10px; margin-bottom: 1.5rem;">8. OCR Model</h3>
-                <p><strong>Options:</strong> LPRNet (Recommended), CRNN, Tesseract</p>
-                <p><strong>Metrics:</strong> Character Accuracy, Full Plate Accuracy</p>
-                <div style="margin-top: 1rem; background: #e6f7ff; padding: 1.5rem; border: 1px solid #91d5ff; border-radius: 10px; font-weight: 600;">
-                    💡 Use CTC Loss to handle sequence recognition in plates.
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- SECTION 5: CHALLENGES & IMPROVEMENTS -->
-    <div class="plan-section" style="margin-bottom: 5rem;">
-        <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 2rem; display: flex; align-items: center; gap: 15px;">
-            <span style="background: black; color: white; padding: 5px 15px; border-radius: 10px;">05</span> Challenges & Scaling
-        </h2>
-        <div style="display: flex; gap: 2rem;">
-            <div style="flex: 1; background: #fff1f0; padding: 2.5rem; border-radius: 20px; border: 1.5px solid #ffa39e;">
-                <h4 style="font-weight: 800; color: #cf1322; margin-bottom: 1rem;">⚠️ Challenges</h4>
-                <ul style="font-weight: 600; line-height: 2;">
-                    <li>Motion blur & Occlusion</li>
-                    <li>Low resolution input</li>
-                    <li>Dirty or non-standard plates</li>
-                </ul>
-            </div>
-            <div style="flex: 1; background: #f6ffed; padding: 2.5rem; border-radius: 20px; border: 1.5px solid #b7eb8f;">
-                <h4 style="font-weight: 800; color: #389e0d; margin-bottom: 1rem;">🚀 Future Roadmap</h4>
-                <ul style="font-weight: 600; line-height: 2;">
-                    <li>Perspective Correction</li>
-                    <li>Multi-line Plate Support</li>
-                    <li>Real-time Camera Integration</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <!-- SECTION 6: STRUCTURE -->
-    <div class="plan-section" style="margin-bottom: 5rem;">
-        <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 2rem; display: flex; align-items: center; gap: 15px;">
-            <span style="background: black; color: white; padding: 5px 15px; border-radius: 10px;">06</span> Execution Plan
-        </h2>
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;">
-            {% for phase in ['1: Data Prep', '2: Detection', '3: OCR Dataset', '4: OCR Model', '5: Integration', '6: Optimization'] %}
-            <div style="background: white; border: 2px solid black; padding: 1.5rem; border-radius: 15px; text-align: center;">
-                <h3 style="font-weight: 800; margin-bottom: 5px; font-size: 1rem;">Phase {{ phase }}</h3>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-
-    <div style="text-align: center; margin-top: 5rem; background: var(--sidebar-navy); color: white; padding: 3rem; border-radius: 30px;">
-        <h2 style="font-weight: 800; margin-bottom: 1rem;">Conclusion</h2>
-        <p style="font-size: 1.1rem; opacity: 0.8; max-width: 600px; margin: 0 auto; line-height: 1.6;">"Building a real-world ML system requires high-quality data, consistent annotation, and a robust end-to-end pipeline."</p>
     </div>
 
     <footer style="text-align: center; margin-top: 6rem; padding-top: 2rem; border-top: 1.5px solid #eee;">
         <p style="font-weight: 800; color: #aaa; text-transform: uppercase; letter-spacing: 0.2em;">Project Blueprints &copy; 2026</p>
     </footer>
 </div>
+
+<!-- Marked.js for high-performance markdown rendering -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<!-- GitHub Markdown CSS for beautiful typography (optional, but we'll use custom styling) -->
+
+<style>
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    .markdown-body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+        line-height: 1.7;
+        color: #24292e;
+    }
+    .markdown-body h1 {
+        font-size: 3rem;
+        font-weight: 800;
+        border-bottom: 4px solid var(--accent-purple);
+        padding-bottom: 1rem;
+        margin-bottom: 2.5rem;
+        letter-spacing: -2px;
+    }
+    .markdown-body h2 {
+        font-size: 1.8rem;
+        font-weight: 800;
+        margin-top: 4rem;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    .markdown-body h3 {
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-top: 2rem;
+        color: var(--sidebar-navy);
+    }
+    .markdown-body p { margin-bottom: 1.2rem; font-weight: 500; font-size: 1.05rem; }
+    .markdown-body code {
+        background: #f6f8fa;
+        padding: 0.2em 0.4em;
+        border-radius: 6px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 85%;
+    }
+    .markdown-body pre {
+        background: #f6f8fa;
+        padding: 1.5rem;
+        border-radius: 12px;
+        border: 1px solid #e1e4e8;
+        overflow-x: auto;
+        margin: 1.5rem 0;
+    }
+    .markdown-body pre code { background: none; padding: 0; }
+    .markdown-body blockquote {
+        border-left: 4px solid var(--accent-purple);
+        padding: 0.5rem 1.5rem;
+        color: #6a737d;
+        background: #f9f9f9;
+        margin: 1.5rem 0;
+        border-radius: 0 10px 10px 0;
+    }
+    .markdown-body table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 2rem 0;
+    }
+    .markdown-body th, .markdown-body td {
+        padding: 1rem;
+        border: 1px solid #dfe2e5;
+        text-align: left;
+    }
+    .markdown-body th { background: #f6f8fa; font-weight: 700; }
+    .markdown-body ul, .markdown-body ol { padding-left: 2rem; margin-bottom: 1.5rem; }
+    .markdown-body li { margin-bottom: 0.5rem; font-weight: 500; }
+    .markdown-body hr { border: none; border-top: 1px solid #eee; margin: 3rem 0; }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const raw = document.getElementById('raw-content').textContent;
+        const viewer = document.getElementById('markdown-viewer');
+        
+        // Configure marked
+        marked.setOptions({
+            breaks: true,
+            gfm: true,
+            headerIds: true
+        });
+
+        // Render content
+        viewer.innerHTML = marked.parse(raw);
+        
+        // Final polish for headers
+        const h1 = viewer.querySelector('h1');
+        if (h1) {
+            h1.innerHTML = h1.innerText.replace('(LPR)', '<span style="color: var(--accent-purple)">(LPR)</span>');
+        }
+    });
+</script>
 {% endblock %}

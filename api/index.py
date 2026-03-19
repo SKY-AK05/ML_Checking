@@ -120,7 +120,12 @@ def review():
 
 @app.route("/plan")
 def plan():
-    return render_template("plan.html", active_page='plan')
+    content = ""
+    plan_path = os.path.join(os.getcwd(), "plan.md")
+    if os.path.exists(plan_path):
+        with open(plan_path, "r", encoding="utf-8") as f:
+            content = f.read()
+    return render_template("plan.html", content=content, active_page='plan')
 
 @app.route("/download-excel")
 def download_excel():
