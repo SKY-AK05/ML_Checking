@@ -175,7 +175,30 @@
       function closeModal() {
         document.getElementById("image-modal").style.display = "none";
         document.body.style.overflow = "auto";
+        window.currentIndex = -1;
       }
+
+      function showNext() {
+        if (window.allImages && window.currentIndex < window.allImages.length - 1) {
+            window.openImage(window.currentIndex + 1);
+        }
+      }
+
+      function showPrev() {
+        if (window.allImages && window.currentIndex > 0) {
+            window.openImage(window.currentIndex - 1);
+        }
+      }
+
+      // Keyboard Shortcuts
+      document.addEventListener('keydown', function(e) {
+        const modal = document.getElementById("image-modal");
+        if (modal.style.display === "block") {
+            if (e.key === "Escape") closeModal();
+            if (e.key === "ArrowRight" || e.key === "ArrowDown") showNext();
+            if (e.key === "ArrowLeft" || e.key === "ArrowUp") showPrev();
+        }
+      });
 
       if (container) {
         container.addEventListener(

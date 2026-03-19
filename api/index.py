@@ -1,7 +1,8 @@
 from flask import Flask, render_template, url_for, jsonify, send_file, request
 import pandas as pd
 import os
-from collections import defaultdict
+from collections import defaultdict, Counter
+import re
 
 # CRITICAL: Find the project root directory (one level up from /api)
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -58,16 +59,36 @@ def voting():
         row["img_url"] = find_image_path(img_name)
         grouped[img_name].append(row)
     
-    # Create summarized image list
+    # Search Query
+    query = request.args.get('q', '').lower()
+    
+    # Create summarized image list and calculate Global Label Stats
     summary_list = []
+    global_label_counts = Counter()
+    
     for img_name, votes in grouped.items():
-        summary_list.append({
+        v_summary = str(votes[0].get("voting_summary", ""))
+        
+        # Parse labels for global stats (e.g., "blurred (4)" -> "blurred")
+        # Removing parentheses and counts for broad label stats
+        labels_in_img = re.findall(r'([a-zA-Z\s]+)\s*\(\d+\)', v_summary)
+        for lbl in labels_in_img:
+            global_label_counts[lbl.strip()] += 1
+
+        img_data = {
             "image": img_name,
             "img_url": votes[0].get("img_url"),
-            "voting_summary": votes[0].get("voting_summary", "Calculating..."),
+            "voting_summary": v_summary,
             "votes": votes,
             "total_votes": len(votes)
-        })
+        }
+        
+        # Filter logic
+        if not query or query in v_summary.lower() or query in img_name.lower():
+            summary_list.append(img_data)
+    
+    # Sort global stats by frequency
+    sorted_labels = dict(global_label_counts.most_common(8))
 
     # Pagination Logic
     page = request.args.get('page', 1, type=int)
@@ -84,6 +105,8 @@ def voting():
                            page=page, 
                            total_pages=total_pages,
                            total_images=total_images,
+                           query=query,
+                           label_stats=sorted_labels,
                            active_page='voting')
 
 @app.route("/review")
