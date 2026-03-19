@@ -2,12 +2,50 @@
 
 {% block content %}
 <header class="header">
-    <h1>⚡ Student Leaderboard</h1>
-    <p>Real-time performance metrics and annotation quality scores.</p>
+    <h1>🚀 Project Overview Dashboard</h1>
+    <p>Real-time analytics across all annotation phases and label distributions.</p>
 </header>
 
-<div class="dashboard-card" style="margin-top: 2rem;">
-    <div class="table-container">
+<!-- Global KPI Cards -->
+<div class="stats-overview" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem; margin-bottom: 3rem;">
+    <!-- Total Images Card -->
+    <div class="dashboard-card" style="padding: 2.5rem; text-align: center; border-bottom: 5px solid var(--accent-purple); display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <h3 style="font-size: 0.9rem; text-transform: uppercase; color: #888; letter-spacing: 0.1em; margin-bottom: 1rem;">Total Unique Images</h3>
+        <div style="font-size: 3.5rem; font-weight: 900; color: var(--sidebar-navy); letter-spacing: -2px;">{{ total_images }}</div>
+        <p style="margin-top: 1rem; font-size: 0.8rem; font-weight: 700; color: var(--accent-purple);">Across all student folders</p>
+    </div>
+
+    <!-- Active Students Card -->
+    <div class="dashboard-card" style="padding: 2.5rem; text-align: center; border-bottom: 5px solid var(--accent-lime); display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <h3 style="font-size: 0.9rem; text-transform: uppercase; color: #888; letter-spacing: 0.1em; margin-bottom: 1rem;">Active Students</h3>
+        <div style="font-size: 3.5rem; font-weight: 900; color: var(--sidebar-navy); letter-spacing: -2px;">{{ tables|length }}</div>
+        <p style="margin-top: 1rem; font-size: 0.8rem; font-weight: 700; color: var(--accent-lime);">Contributing to dataset</p>
+    </div>
+</div>
+
+<!-- Label Detailed Breakdown -->
+<div class="dashboard-card" style="margin-bottom: 3rem; padding: 3rem;">
+    <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 2rem; display: flex; align-items: center; gap: 15px;">
+        <i data-lucide="bar-chart-3" style="color: var(--accent-purple);"></i> Detailed Label Distribution
+    </h2>
+    <div class="stats-grid" style="display: flex; gap: 1.2rem; flex-wrap: wrap;">
+        {% for label, count in label_stats.items() %}
+        <div class="stat-tag" style="background: white; border: 1.5px solid black; padding: 1rem 1.8rem; border-radius: 50px; box-shadow: 6px 6px 0px black; font-weight: 800; font-size: 0.95rem; display: flex; align-items: center; gap: 15px;">
+            <span style="color: var(--accent-purple); text-transform: uppercase;">{{ label if label else 'UNLABELED' }}</span>
+            <span style="font-size: 1.4rem; border-left: 2px solid #eee; padding-left: 15px; color: var(--sidebar-navy);">{{ count }}</span>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Leaderboard Section -->
+<div class="dashboard-card">
+    <div style="padding: 2rem 3rem; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
+        <h2 style="font-size: 1.5rem; font-weight: 800; display: flex; align-items: center; gap: 15px;">
+            <i data-lucide="award" style="color: #ffcc00;"></i> Student Leaderboard
+        </h2>
+    </div>
+    <div class="table-container" style="padding: 1rem;">
     <table>
         <thead>
             <tr>
@@ -22,14 +60,14 @@
         <tbody>
             {% for row in tables %}
             <tr>
-                <td style="font-weight: 600;">{{row.student}}</td>
+                <td style="font-weight: 700; color: var(--sidebar-navy);">{{row.student}}</td>
                 <td>{{row.total}}</td>
                 <td><span class="{{ 'badge badge-error' if row.errors > 0 else 'badge badge-success' }}">{{row.errors}}</span></td>
                 <td><span class="{{ 'badge badge-warning' if row.warnings > 0 else 'badge badge-success' }}">{{row.warnings}}</span></td>
-                <td><span style="font-weight: 700;">{{row.accuracy}}%</span></td>
+                <td><span style="font-weight: 800; color: var(--sidebar-navy);">{{row.accuracy}}%</span></td>
                 <td>
-                    <div class="accuracy-bar">
-                        <div class="accuracy-fill" style="width: {{row.accuracy}}%;"></div>
+                    <div class="accuracy-bar" style="height: 10px; border-radius: 20px;">
+                        <div class="accuracy-fill" style="width: {{row.accuracy}}%; height: 100%; border-radius: 20px;"></div>
                     </div>
                 </td>
             </tr>

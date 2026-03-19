@@ -41,8 +41,31 @@ def find_image_path(filename):
 
 @app.route("/")
 def home():
-    data = read_excel_sheet("Summary")
-    return render_template("index.html", tables=data, active_page='home')
+    # Load and calculate global stats for the overview
+    voting_data = read_excel_sheet("Voting")
+    summary_data = read_excel_sheet("Summary")
+    
+    # Unique images count
+    unique_images = len(set(str(row.get("image")).strip() for row in voting_data if not pd.isna(row.get("image"))))
+    
+    # Label breakdown (calculate from all voting summary strings)
+    global_label_counts = Counter()
+    for row in voting_data:
+        v_summary = str(row.get("voting_summary", ""))
+        labels_found = re.findall(r'([a-zA-Z0-9_\s]+?)\s*(?:⚠️)?\s*\(\d+\)', v_summary)
+        for lbl in labels_found:
+            clean_lbl = lbl.strip().upper()
+            if clean_lbl:
+                global_label_counts[clean_lbl] += 1
+    
+    # Sort top labels
+    label_stats = dict(global_label_counts.most_common(12))
+    
+    return render_template("index.html", 
+                           tables=summary_data, 
+                           total_images=unique_images,
+                           label_stats=label_stats,
+                           active_page='home')
 
 @app.route("/errors")
 def errors():
@@ -51,18 +74,34 @@ def errors():
 
 @app.route("/voting")
 def voting():
-    # Group flat data by image
     raw_data = read_excel_sheet("Voting")
     grouped = defaultdict(list)
+    
+    # Phase Filtering
+    # If the user has a "phase" column in the sheet, use it; otherwise, everything is Phase 1
+    phases_found = set()
+    current_phase = request.args.get('phase', 'Phase 1').strip()
+    
     for row in raw_data:
+        # Automatically detect phases if the column exists
+        phase_val = str(row.get("phase", "Phase 1")).strip() if "phase" in row else "Phase 1"
+        phases_found.add(phase_val)
+        
         img_raw = row.get("image")
         if pd.isna(img_raw): continue
+        
+        # Filter by selected phase
+        row_phase = str(row.get("phase", "Phase 1")).strip() if "phase" in row else "Phase 1"
+        if row_phase != current_phase: continue
         
         img_name = str(img_raw).strip()
         if not img_name or img_name.lower() in ["nan", "none"]: continue
         
         row["img_url"] = find_image_path(img_name)
         grouped[img_name].append(row)
+    
+    # Sort phases for the UI selector
+    all_phases = sorted(list(phases_found)) if phases_found else ["Phase 1"]
     
     # Search Query
     query = request.args.get('q', '').lower()
@@ -74,8 +113,7 @@ def voting():
     for img_name, votes in grouped.items():
         v_summary = str(votes[0].get("voting_summary", ""))
         
-        # Robust parsing for label stats: Match "Label Name (Count)" or "Label ⚠️ (Count)"
-        # This regex handles characters, numbers, and spaces in the label name.
+        # Robust parsing for label stats
         labels_found = re.findall(r'([a-zA-Z0-9_\s]+?)\s*(?:⚠️)?\s*\(\d+\)', v_summary)
         for lbl in labels_found:
             clean_lbl = lbl.strip().upper()
@@ -114,6 +152,8 @@ def voting():
                            total_images=total_images,
                            query=query,
                            label_stats=sorted_labels,
+                           all_phases=all_phases,
+                           current_phase=current_phase,
                            active_page='voting')
 
 @app.route("/review")

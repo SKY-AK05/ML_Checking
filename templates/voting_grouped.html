@@ -5,6 +5,18 @@
     <h1>⚡ Image Consensus Dashboard</h1>
     <p style="margin-bottom: 2rem;">Detailed overview of annotations grouped by image filename.</p>
 
+    <!-- Phase Selector Tabs -->
+    <div class="phase-tabs" style="display: flex; gap: 1rem; margin-bottom: 2rem; border-bottom: 2px solid #eee; padding-bottom: 1rem;">
+        {% for phase in all_phases %}
+        <a href="{{ url_for('voting', phase=phase) }}" 
+           class="phase-tab" 
+           style="text-decoration: none; padding: 0.8rem 2rem; border-radius: 50px; font-weight: 800; font-size: 0.9rem; transition: all 0.2s; 
+                  {{ 'background: var(--sidebar-navy); color: white; box-shadow: 4px 4px 0px var(--accent-purple);' if phase == current_phase else 'background: white; color: #888; border: 1.5px solid #eee;' }}">
+            {{ phase }}
+        </a>
+        {% endfor %}
+    </div>
+
     <!-- Global Label Stats -->
     <div class="stats-grid" style="display: flex; gap: 1.2rem; flex-wrap: wrap; margin-bottom: 3rem;">
         {% for label, count in label_stats.items() %}
