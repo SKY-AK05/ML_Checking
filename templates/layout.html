@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>📦 Binke QA Dashboard</title>
+    <!-- Modern Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Custom Style -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <nav class="sidebar">
+      <div class="logo">Tagging QC</div>
+      <ul class="nav-links">
+        <li class="{{ 'active' if active_page == 'home' else '' }}">
+          <a href="/"
+            ><i
+              data-lucide="layout-dashboard"
+              style="margin-right: 12px; width: 20px"
+            ></i>
+            Dashboard</a
+          >
+        </li>
+        <li class="{{ 'active' if active_page == 'errors' else '' }}">
+          <a href="/errors"
+            ><i
+              data-lucide="alert-circle"
+              style="margin-right: 12px; width: 20px"
+            ></i>
+            Errors & Warnings</a
+          >
+        </li>
+        <li class="{{ 'active' if active_page == 'voting' else '' }}">
+          <a href="/voting"
+            ><i
+              data-lucide="check-square"
+              style="margin-right: 12px; width: 20px"
+            ></i>
+            Voting Details</a
+          >
+        </li>
+        <li class="{{ 'active' if active_page == 'review' else '' }}">
+          <a href="/review"
+            ><i data-lucide="eye" style="margin-right: 12px; width: 20px"></i>
+            Disagreements</a
+          >
+        </li>
+      </ul>
+      <div
+        style="
+          margin-top: auto;
+          padding-top: 2rem;
+          border-top: 1px solid var(--border-color);
+        "
+      >
+        <p style="font-size: 0.75rem; color: var(--text-secondary)">
+          Last updated today
+        </p>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">{% block content %}{% endblock %}</main>
+
+    <script>
+      // Initialize Lucide icons
+      lucide.createIcons();
+    </script>
+  </body>
+</html>

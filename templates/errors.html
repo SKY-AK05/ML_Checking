@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<header class="header">
+    <h1>Rule Violations</h1>
+    <p>Listing all critical errors and warnings found during annotation validation.</p>
+</header>
+
+<div class="dashboard-card" style="margin-top: 2rem;">
+    <div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Image Name</th>
+                <th>Student</th>
+                <th>Issue Type</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in tables %}
+            <tr>
+                <td>{{row.image}}</td>
+                <td>{{row.student}}</td>
+                <td><span class="{{ 'badge badge-error' if row.type == 'ERROR' else 'badge badge-warning' }}">{{row.type}}</span></td>
+                <td style="color: var(--text-secondary); font-size: 0.9rem;">{{row.issue}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}

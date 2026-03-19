@@ -1,0 +1,201 @@
+/* Binke Modern Design System - Alignment Refined */
+:root {
+    --bg-main: #f1f1f1;
+    --sidebar-navy: #1e2235;
+    --accent-purple: #b19cd9;
+    --accent-lime: #d4f18c;
+    --text-dark: #000000;
+    --text-light: #ffffff;
+    --border-color: #000000;
+    --round-md: 12px;
+    --round-lg: 20px;
+    --shadow-sm: 4px 4px 0px #000000;
+    --shadow-md: 6px 6px 0px #000000;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-dark);
+    display: flex;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Sidebar Fix */
+nav.sidebar {
+    width: 260px;
+    background: var(--sidebar-navy);
+    padding: 2.5rem 1.5rem;
+    position: fixed;
+    height: 100vh;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-content {
+    flex: 1;
+    margin-left: 260px;
+    padding: 3rem 4rem;
+    min-width: 0; /* Prevents flex items from overflowing */
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--text-light);
+    margin-bottom: 3.5rem;
+    letter-spacing: -1px;
+}
+
+.nav-links li { margin-bottom: 0.5rem; }
+.nav-links a {
+    text-decoration: none;
+    color: rgba(255,255,255,0.6);
+    font-size: 0.95rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.2rem;
+    border-radius: 50px;
+    transition: all 0.2s ease;
+}
+
+.nav-links .active a {
+    background: var(--accent-purple);
+    color: var(--text-dark);
+    box-shadow: 3px 3px 0px #000;
+}
+
+/* Cards & Layout */
+.dashboard-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: var(--round-lg);
+    padding: 2.5rem;
+    box-shadow: var(--shadow-md);
+    margin-bottom: 2rem;
+    width: 100%;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    margin-bottom: 0.5rem;
+}
+
+/* Grouped View Row Alignment */
+.image-row-header {
+    cursor: pointer;
+    border: 1px solid var(--border-color);
+    background: white;
+    border-radius: var(--round-md);
+    margin-bottom: 0.8rem;
+    transition: all 0.2s;
+    box-shadow: var(--shadow-sm);
+    display: grid;
+    /* Balanced: Pic (80) | Name (220) | Summary (1fr) | Count (120) | Arrow (50) */
+    grid-template-columns: 80px 220px 1fr 150px 50px;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    gap: 1rem;
+}
+
+.image-row-header:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.details-panel {
+    display: none;
+    background: #fbfbfb;
+    border: 1px solid var(--border-color);
+    border-top: none;
+    border-radius: 0 0 16px 16px;
+    margin-top: -1.2rem;
+    margin-bottom: 1.5rem;
+    padding: 2rem;
+}
+
+/* Table Alignment Fixes */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    color: #888;
+    border-bottom: 2px solid #eee;
+}
+
+td {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+}
+
+/* Badges & Progress */
+.badge {
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    border: 1px solid black;
+    display: inline-block;
+    text-align: center;
+    min-width: 80px;
+}
+
+.badge-success { background: var(--accent-lime); }
+.badge-warning { background: #fee440; }
+.badge-error { background: #ff708d; color: white; }
+
+.accuracy-bar {
+    height: 10px;
+    background: #eee;
+    border-radius: 20px;
+    width: 100px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    display: inline-block;
+}
+
+.accuracy-fill { height: 100%; background: var(--accent-purple); }
+
+/* Modal Perfection */
+.modal-content {
+    display: flex;
+    width: 90%;
+    max-width: 1200px;
+    height: 80vh;
+    margin: 10vh auto;
+    background: white;
+    border-radius: 20px;
+    border: 2px solid black;
+    box-shadow: 10px 10px 0px black;
+}
+
+.modal-left { flex: 1.5; background: #111; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.modal-right { flex: 1; padding: 3rem; background: white; border-left: 2px solid black; overflow-y: auto; }
+
+img.thumb {
+    width: 60px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid black;
+}

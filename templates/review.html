@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<header class="header">
+    <h1>Manual Review Required</h1>
+    <p>Listing images where there was high disagreement among annotators.</p>
+</header>
+
+<div class="dashboard-card" style="margin-top: 2rem; max-width: 600px;">
+    <div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Preview</th>
+                <th>Image Name (Disagreement)</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in tables %}
+            <tr>
+                <td>
+                    {% if row.img_url %}
+                        <img src="{{ row.img_url }}" style="width: 80px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border-color); cursor: pointer;" onclick="showModal('{{ row.img_url }}', '{{ row.image }}', 'Status: {{ row.status }}')">
+                    {% else %}
+                        <div style="width: 80px; height: 50px; background: #334155; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: var(--text-secondary);">N/A</div>
+                    {% endif %}
+                </td>
+                <td style="font-weight: 800;">{{row.image}}</td>
+                <td><span class="badge" style="background: var(--accent-purple); color: black;">Pending Review</span></td>
+            </tr>
+{% endfor %}
+{% if not tables %}
+    <tr>
+        <td colspan="3" style="text-align: center; color: var(--text-secondary); padding: 3rem;">No disagreement found! Excellent consistency.</td>
+    </tr>
+{% endif %}
+
+<!-- Modal Code (Included in template since we didn't put it in base yet) -->
+<div id="image-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-close" onclick="closeModal()">&times;</div>
+        <div class="modal-left" id="modal-img-container" onmousemove="zoom(event)" onmouseleave="resetZoom()">
+            <img id="zoom-image" src="" alt="Full Resolution" style="transform-origin: center;">
+        </div>
+        <div class="modal-right">
+            <h2 id="modal-img-title" style="font-size: 2rem; margin-bottom: 1rem; letter-spacing: -1px;">FILENAME.JPG</h2>
+            <hr style="border: 1px solid black; margin-bottom: 2rem;">
+            <div style="margin-bottom: 2rem;">
+                <h4 style="text-transform: uppercase; color: #888; letter-spacing: 0.1em; font-size: 0.7rem; margin-bottom: 0.5rem;">Status</h4>
+                <p id="modal-img-summary" style="font-size: 1.2rem; font-weight: 700; color: var(--sidebar-navy);"></p>
+            </div>
+            <div style="background: var(--bg-main); padding: 2rem; border-radius: 16px; border: 1px dashed black;">
+                 <h4 style="text-transform: uppercase; color: #888; letter-spacing: 0.1em; font-size: 0.7rem; margin-bottom: 0.5rem;">Review Instructions</h4>
+                 <p style="font-size: 0.85rem; line-height: 1.6;">Please cross-verify the majority tags with the visual evidence on the left.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showModal(url, title, summary) {
+        document.getElementById('zoom-image').src = url;
+        document.getElementById('modal-img-title').innerText = title;
+        document.getElementById('modal-img-summary').innerText = summary;
+        document.getElementById('image-modal').style.display = 'block';
+    }
+    function closeModal() { document.getElementById('image-modal').style.display = 'none'; resetZoom(); }
+    function zoom(e) { /* ... copied logic ... */ }
+    function resetZoom() { /* ... */ }
+</script>
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}
