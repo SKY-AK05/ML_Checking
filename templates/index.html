@@ -9,10 +9,20 @@
 <!-- Global KPI Cards -->
 <div class="stats-overview" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem; margin-bottom: 3rem;">
     <!-- Total Images Card -->
-    <div class="dashboard-card" style="padding: 2.5rem; text-align: center; border-bottom: 5px solid var(--accent-purple); display: flex; flex-direction: column; align-items: center; justify-content: center;">
-        <h3 style="font-size: 0.9rem; text-transform: uppercase; color: #888; letter-spacing: 0.1em; margin-bottom: 1rem;">Total Unique Images</h3>
-        <div style="font-size: 3.5rem; font-weight: 900; color: var(--sidebar-navy); letter-spacing: -2px;">{{ total_images }}</div>
-        <p style="margin-top: 1rem; font-size: 0.8rem; font-weight: 700; color: var(--accent-purple);">Across all student folders</p>
+    <div class="dashboard-card" style="padding: 2rem; text-align: center; border-bottom: 5px solid var(--accent-purple); display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <h3 style="font-size: 0.8rem; text-transform: uppercase; color: #888; letter-spacing: 0.1em; margin-bottom: 0.5rem;">Total Unique Images</h3>
+        <div style="font-size: 3rem; font-weight: 900; color: var(--sidebar-navy); letter-spacing: -2px;">{{ total_images }}</div>
+        
+        <!-- Phase Breakdown Mini-Labels -->
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 1rem;">
+            {% for phase, count in phase_stats.items() %}
+            <div style="background: #f0f4ff; border: 1px solid var(--accent-purple); padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 800; color: var(--accent-purple);">
+                {{ phase }}: {{ count }}
+            </div>
+            {% endfor %}
+        </div>
+        
+        <p style="margin-top: 1rem; font-size: 0.7rem; font-weight: 700; color: #aaa;">Across all student folders</p>
     </div>
 
     <!-- Active Students Card -->

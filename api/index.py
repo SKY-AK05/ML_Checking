@@ -70,9 +70,24 @@ def home():
     # Sort top labels
     label_stats = dict(global_label_counts.most_common(12))
     
+    # Phase-wise unique image counts
+    phase_to_images = defaultdict(set)
+    for row in voting_rows:
+        img_raw = row.get("image")
+        if pd.isna(img_raw): continue
+        img_name = os.path.basename(str(img_raw).strip()).lower()
+        phase_val = str(row.get("phase", "Phase 1")).strip()
+        if img_name:
+            phase_to_images[phase_val].add(img_name)
+    
+    phase_stats = {phase: len(imgs) for phase, imgs in phase_to_images.items()}
+    # Sort phases numerically if possible (e.g. Phase 1, Phase 2)
+    sorted_phase_stats = dict(sorted(phase_stats.items()))
+    
     return render_template("index.html", 
                            tables=summary_data, 
                            total_images=unique_images_count,
+                           phase_stats=sorted_phase_stats,
                            label_stats=label_stats,
                            active_page='home')
 
