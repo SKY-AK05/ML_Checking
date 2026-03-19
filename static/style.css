@@ -189,8 +189,42 @@ td {
     box-shadow: 10px 10px 0px black;
 }
 
-.modal-left { flex: 1.5; background: #111; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.modal-left { flex: 1.5; background: #111; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
 .modal-right { flex: 1; padding: 3rem; background: white; border-left: 2px solid black; overflow-y: auto; }
+
+/* Modal Overlay */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.85); /* Darker backdrop */
+    backdrop-filter: blur(5px);
+}
+
+.modal-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1001;
+    transition: color 0.2s;
+}
+
+.modal-close:hover { color: var(--accent-purple); }
+
+#zoom-image {
+    max-width: 90%;
+    max-height: 90%;
+    transition: transform 0.1s ease-out; /* Snappy zoom */
+    cursor: zoom-in;
+}
 
 img.thumb {
     width: 60px;

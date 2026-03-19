@@ -22,7 +22,7 @@
         <div class="image-row-header" onclick="toggleDetails('details-{{ loop.index }}')">
             <div class="img-thumb">
                 {% if img.img_url %}
-                    <img src="{{ img.img_url }}" style="width: 60px; height: 45px; object-fit: cover; border-radius: 8px;" onclick="event.stopPropagation(); showModal('{{ img.img_url }}', '{{ img.image }}', '{{ img.voting_summary }}')">
+                    <img src="{{ img.img_url }}" loading="lazy" style="width: 60px; height: 45px; object-fit: cover; border-radius: 8px; cursor: pointer;" onclick="event.stopPropagation(); showModal('{{ img.img_url }}', '{{ img.image }}', '{{ img.voting_summary }}')">
                 {% else %}
                     <div style="width: 60px; height: 45px; background: #ddd; border-radius: 8px;"></div>
                 {% endif %}
@@ -61,13 +61,13 @@
 
 <!-- Modal Structure -->
 <div id="image-modal" class="modal">
+    <div class="modal-close" onclick="closeModal()">&times;</div>
     <div class="modal-content">
-        <div class="modal-close" onclick="closeModal()">&times;</div>
         
         <!-- Left: Image View -->
-        <div class="modal-left" id="modal-img-container" onmousemove="zoom(event)" onmouseleave="resetZoom()">
-            <img id="zoom-image" src="" alt="Full Resolution" style="transform-origin: center;">
-            <div style="position: absolute; bottom: 15px; left: 15px; color: white; background: rgba(0,0,0,0.5); padding: 5px 10px; border-radius: 5px; font-size: 0.7rem;">Click & Hold to Zoom</div>
+        <div class="modal-left" id="modal-img-container">
+            <img id="zoom-image" src="" alt="Full Resolution">
+            <div style="position: absolute; bottom: 15px; left: 15px; color: white; background: rgba(0,0,0,0.5); padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; pointer-events: none;">Scroll to Zoom | Move to Pan</div>
         </div>
 
         <!-- Right: Consensus & Image Summary -->
@@ -100,32 +100,70 @@
         panel.style.display = isOpen ? "none" : "block";
     }
 
+    let currentScale = 1;
+    const minScale = 1;
+    const maxScale = 5;
+    const modalImg = document.getElementById('zoom-image');
+    const container = document.getElementById('modal-img-container');
+
     function showModal(url, title, summary) {
-        document.getElementById('zoom-image').src = url;
+        currentScale = 1;
+        modalImg.src = url;
+        modalImg.style.transform = `scale(${currentScale})`;
+        modalImg.style.transformOrigin = 'center';
         document.getElementById('modal-img-title').innerText = title;
         document.getElementById('modal-img-summary').innerText = summary;
         document.getElementById('image-modal').style.display = 'block';
+        document.body.style.overflow = 'hidden'; // Prevent body scroll
     }
 
     function closeModal() {
         document.getElementById('image-modal').style.display = 'none';
-        resetZoom();
+        document.body.style.overflow = 'auto';
     }
 
-    function zoom(e) {
-        const zoomer = e.currentTarget;
-        const img = document.getElementById('zoom-image');
+    // Advanced Wheel Zoom Logic
+    container.addEventListener('wheel', function(e) {
+        e.preventDefault();
         
-        // Only zoom if clicked/active (optional, currently passive mousemove)
-        // Let's implement the actual zoom as CSS scale on :active but center it on mouse
-        let x = e.offsetX / zoomer.offsetWidth * 100;
-        let y = e.offsetY / zoomer.offsetHeight * 100;
-        img.style.transformOrigin = `${x}% ${y}%`;
-    }
+        const delta = e.deltaY > 0 ? -0.2 : 0.2;
+        const newScale = Math.min(Math.max(currentScale + delta, minScale), maxScale);
+        
+        // Calculate point under mouse relative to container
+        const rect = container.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
 
-    function resetZoom() {
-        document.getElementById('zoom-image').style.transformOrigin = 'center';
-    }
+        currentScale = newScale;
+        modalImg.style.transformOrigin = `${x}% ${y}%`;
+        modalImg.style.transform = `scale(${currentScale})`;
+        
+        // Change cursor based on zoom state
+        modalImg.style.cursor = currentScale > 1 ? 'zoom-out' : 'zoom-in';
+    }, { passive: false });
+
+    // Panning on mouse move when zoomed
+    container.addEventListener('mousemove', function(e) {
+        if (currentScale > 1) {
+            const rect = container.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            modalImg.style.transformOrigin = `${x}% ${y}%`;
+        }
+    });
+
+    // Reset zoom on click
+    modalImg.onclick = function() {
+        if (currentScale > 1) {
+            currentScale = 1;
+            modalImg.style.transform = `scale(${currentScale})`;
+            modalImg.style.cursor = 'zoom-in';
+        } else {
+            currentScale = 2.5; 
+            modalImg.style.transform = `scale(${currentScale})`;
+            modalImg.style.cursor = 'zoom-out';
+        }
+    };
 
     window.onclick = function(event) {
         if (event.target == document.getElementById('image-modal')) {
