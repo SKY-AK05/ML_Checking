@@ -10,12 +10,18 @@ import shutil
 # Configuration
 ZIP_FOLDER = "annotations"
 EXTRACTED_FOLDER = "extracted_xmls"
-IMAGE_STORAGE = os.path.join("static", "images")
+
+# --- PHASE SETTING ---
+# Change this to "Phase 2", "Phase 3", etc. before running the script
+CURRENT_PHASE = "Phase 1" 
+
+IMAGE_STORAGE_BASE = os.path.join("static", "images")
+IMAGE_STORAGE = os.path.join(IMAGE_STORAGE_BASE, CURRENT_PHASE)
 EXCEL_FILE = os.path.join("api", "final_QA_report.xlsx")
 
 # Ensure output folders exist
 if os.path.exists(EXTRACTED_FOLDER): shutil.rmtree(EXTRACTED_FOLDER)
-if os.path.exists(IMAGE_STORAGE): shutil.rmtree(IMAGE_STORAGE)
+# Note: We preserve IMAGE_STORAGE_BASE to keep old phase images
 os.makedirs(EXTRACTED_FOLDER, exist_ok=True)
 os.makedirs(IMAGE_STORAGE, exist_ok=True)
 
@@ -46,7 +52,7 @@ def check_rules(tags, img_name, student):
 # -----------------------------
 # EXTRACT ZIP FILES
 # -----------------------------
-print(f"📦 Processing ZIP files from '{ZIP_FOLDER}'...")
+print(f"📦 Processing ZIP files for [{CURRENT_PHASE}] from '{ZIP_FOLDER}'...")
 IMG_EXTENSIONS = ('.jpg', '.jpeg', '.png', '.webp')
 
 for filename in os.listdir(ZIP_FOLDER):
@@ -118,7 +124,7 @@ def get_voting_summary(votes):
     
     # Uncertainty Detection: Highest voted tag < 70%
     max_votes = sorted_tags[0][1] if sorted_tags else 0
-    is_uncertain = (max_votes / total_voters) < 0.7
+    is_uncertain = (max_votes / total_voters) < 0.7 if total_voters > 0 else False
     
     for tag, count in sorted_tags:
         percent = (count / total_voters)
@@ -158,8 +164,9 @@ for img_name, votes in image_votes.items():
         voting_rows.append([
             img_name, student, 
             ", ".join(student_tags), 
-            summary_str, # Rule 7: New voting_summary
-            round(score, 2)
+            summary_str, 
+            round(score, 2),
+            CURRENT_PHASE # Rule: Tag row with the current phase
         ])
 
 # -----------------------------
@@ -172,11 +179,16 @@ for student, data in student_stats.items():
 
 summary_df = pd.DataFrame(summary_rows, columns=["student", "total", "errors", "warnings", "accuracy"]).sort_values(by="accuracy", ascending=False)
 
-print(f"📊 Finalizing {EXCEL_FILE}...")
+print(f"📊 Finalizing {EXCEL_FILE} with Phase column...")
+# Handle existing Excel to APPEND rather than overwrite (Optional, but let's overwrite 
+# and let the user re-run phases if they want, OR we can merge them in the script)
+# For simplicity, we overwrite the Excel but the Dashboard handles all phases found in the sheet.
+# If the user wants to keep Phase 1 AND Phase 2 in the same file, they should concatenate data.
+
 with pd.ExcelWriter(EXCEL_FILE, engine='openpyxl') as writer:
     summary_df.to_excel(writer, sheet_name="Summary", index=False)
     pd.DataFrame(error_rows, columns=["image","student","type","issue"]).to_excel(writer, sheet_name="Errors", index=False)
-    pd.DataFrame(voting_rows, columns=["image","student","student_tags","voting_summary","score"]).to_excel(writer, sheet_name="Voting", index=False)
+    pd.DataFrame(voting_rows, columns=["image","student","student_tags","voting_summary","score", "phase"]).to_excel(writer, sheet_name="Voting", index=False)
     pd.DataFrame({"image": list(set(uncertain_images)), "status": "UNCERTAIN"}).to_excel(writer, sheet_name="Review", index=False)
 
 try:
@@ -186,4 +198,4 @@ try:
     chart.add_data(data, titles_from_data=True); chart.set_categories(cats); ws.add_chart(chart, "G2"); wb.save(EXCEL_FILE)
 except Exception as e: print(f"⚠️ Chart Error: {e}")
 
-print("✅ Analysis Complete.")
+print(f"✅ Analysis Complete. Images saved in: {IMAGE_STORAGE}")
