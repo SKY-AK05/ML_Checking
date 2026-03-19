@@ -96,7 +96,7 @@ for student in os.listdir(EXTRACTED_FOLDER):
                 tree = ET.parse(os.path.join(student_path, xml_file))
                 root = tree.getroot()
                 for img in root.findall("image"):
-                    img_name = img.attrib["name"]
+                    img_name = os.path.basename(img.attrib["name"])
                     tags = img.findall("tag")
                     errors, warnings, tag_names = check_rules(tags, img_name, student)
                     student_stats[student]["total"] += 1

@@ -50,7 +50,7 @@ def home():
     for row in voting_rows:
         img_raw = row.get("image")
         if pd.isna(img_raw): continue
-        img_name = str(img_raw).strip().lower() # Standardize for grouping
+        img_name = os.path.basename(str(img_raw).strip()).lower() # Standardize for grouping
         if img_name and img_name != "nan":
             image_to_votes[img_name].append(row)
     
