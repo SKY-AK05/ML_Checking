@@ -6,11 +6,11 @@
     <p style="margin-bottom: 2rem;">Detailed overview of annotations grouped by image filename.</p>
 
     <!-- Global Label Stats -->
-    <div class="stats-grid" style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem;">
+    <div class="stats-grid" style="display: flex; gap: 1.2rem; flex-wrap: wrap; margin-bottom: 3rem;">
         {% for label, count in label_stats.items() %}
-        <div class="stat-tag" style="background: white; border: 1px solid black; padding: 0.6rem 1.2rem; border-radius: 50px; box-shadow: 4px 4px 0px black; font-weight: 700; font-size: 0.8rem;">
-            <span style="color: var(--accent-purple); text-transform: uppercase; margin-right: 8px;">{{ label }}</span>
-            <span style="font-size: 1.1rem;">{{ count }}</span>
+        <div class="stat-tag" style="background: white; border: 1.5px solid black; padding: 0.7rem 1.4rem; border-radius: 50px; box-shadow: 6px 6px 0px black; font-weight: 800; font-size: 0.85rem; display: flex; align-items: center; gap: 10px;">
+            <span style="color: var(--accent-purple); text-transform: uppercase;">{{ label if label else 'UNLABELED' }}</span>
+            <span style="font-size: 1.2rem; border-left: 1.5px solid #eee; padding-left: 10px;">{{ count }}</span>
         </div>
         {% endfor %}
     </div>

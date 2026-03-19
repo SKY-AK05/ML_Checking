@@ -69,11 +69,13 @@ def voting():
     for img_name, votes in grouped.items():
         v_summary = str(votes[0].get("voting_summary", ""))
         
-        # Parse labels for global stats (e.g., "blurred (4)" -> "blurred")
-        # Removing parentheses and counts for broad label stats
-        labels_in_img = re.findall(r'([a-zA-Z\s]+)\s*\(\d+\)', v_summary)
-        for lbl in labels_in_img:
-            global_label_counts[lbl.strip()] += 1
+        # Robust parsing for label stats: Match "Label Name (Count)" or "Label ⚠️ (Count)"
+        # This regex handles characters, numbers, and spaces in the label name.
+        labels_found = re.findall(r'([a-zA-Z0-9_\s]+?)\s*(?:⚠️)?\s*\(\d+\)', v_summary)
+        for lbl in labels_found:
+            clean_lbl = lbl.strip().upper()
+            if clean_lbl:
+                global_label_counts[clean_lbl] += 1
 
         img_data = {
             "image": img_name,
