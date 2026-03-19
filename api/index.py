@@ -3,17 +3,24 @@ import pandas as pd
 import os
 from collections import defaultdict
 
-app = Flask(__name__)
+# CRITICAL: Find the project root directory (one level up from /api)
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Constants
-EXCEL_FILE = "final_QA_report.xlsx"
-IMAGE_STORAGE = os.path.join("static", "images")
+# Configure Flask to look for templates and static files in the ROOT folder
+app = Flask(__name__, 
+            template_folder=os.path.join(ROOT_DIR, 'templates'),
+            static_folder=os.path.join(ROOT_DIR, 'static'))
+
+# Update Constants with absolute paths
+EXCEL_FILE = os.path.join(ROOT_DIR, "final_QA_report.xlsx")
+IMAGE_STORAGE = os.path.join(ROOT_DIR, "static", "images")
 
 def read_excel_sheet(sheet_name):
-    if not os.path.exists(EXCEL_FILE): return []
+    if not os.path.exists(EXCEL_FILE):
+        print(f"Excel file NOT found at: {EXCEL_FILE}")
+        return []
     try:
         df = pd.read_excel(EXCEL_FILE, sheet_name=sheet_name)
-        # Ensure 'accuracy' and 'score' are rounded or handled correctly
         return df.to_dict(orient="records")
     except Exception as e:
         print(f"Error reading {sheet_name}: {e}")
@@ -51,7 +58,6 @@ def voting():
     # Create summarized image list
     summary_list = []
     for img_name, votes in grouped.items():
-        # All votes for the same image share the same summary string
         summary_list.append({
             "image": img_name,
             "img_url": votes[0].get("img_url"),
