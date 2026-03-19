@@ -41,17 +41,26 @@ def find_image_path(filename):
 
 @app.route("/")
 def home():
-    # Load and calculate global stats for the overview
-    voting_data = read_excel_sheet("Voting")
+    # Load data
+    voting_rows = read_excel_sheet("Voting")
     summary_data = read_excel_sheet("Summary")
     
-    # Unique images count
-    unique_images = len(set(str(row.get("image")).strip() for row in voting_data if not pd.isna(row.get("image"))))
+    # Group by image name to ensure unique calculations (Case-insensitive & Stripped)
+    image_to_votes = defaultdict(list)
+    for row in voting_rows:
+        img_raw = row.get("image")
+        if pd.isna(img_raw): continue
+        img_name = str(img_raw).strip().lower() # Standardize for grouping
+        if img_name and img_name != "nan":
+            image_to_votes[img_name].append(row)
     
-    # Label breakdown (calculate from all voting summary strings)
+    unique_images_count = len(image_to_votes)
+    
+    # Label breakdown (calculated once per image)
     global_label_counts = Counter()
-    for row in voting_data:
-        v_summary = str(row.get("voting_summary", ""))
+    for img_name, votes in image_to_votes.items():
+        # Use the first row's voting summary (since it's common for the image)
+        v_summary = str(votes[0].get("voting_summary", ""))
         labels_found = re.findall(r'([a-zA-Z0-9_\s]+?)\s*(?:⚠️)?\s*\(\d+\)', v_summary)
         for lbl in labels_found:
             clean_lbl = lbl.strip().upper()
@@ -63,7 +72,7 @@ def home():
     
     return render_template("index.html", 
                            tables=summary_data, 
-                           total_images=unique_images,
+                           total_images=unique_images_count,
                            label_stats=label_stats,
                            active_page='home')
 
