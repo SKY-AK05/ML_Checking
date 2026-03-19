@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, jsonify, send_file
+from flask import Flask, render_template, url_for, jsonify, send_file, request
 import pandas as pd
 import os
 from collections import defaultdict
@@ -68,8 +68,23 @@ def voting():
             "votes": votes,
             "total_votes": len(votes)
         })
+
+    # Pagination Logic
+    page = request.args.get('page', 1, type=int)
+    per_page = 50
+    total_images = len(summary_list)
+    total_pages = (total_images + per_page - 1) // per_page
     
-    return render_template("voting_grouped.html", images=summary_list, active_page='voting')
+    start_idx = (page - 1) * per_page
+    end_idx = start_idx + per_page
+    paginated_images = summary_list[start_idx:end_idx]
+    
+    return render_template("voting_grouped.html", 
+                           images=paginated_images, 
+                           page=page, 
+                           total_pages=total_pages,
+                           total_images=total_images,
+                           active_page='voting')
 
 @app.route("/review")
 def review():

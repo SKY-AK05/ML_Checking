@@ -307,3 +307,60 @@ img.thumb {
 a, button, .image-row-header {
     transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
+
+/* Pagination Styles */
+.pagination-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #ddd;
+}
+
+.pagination-info {
+    font-size: 0.85rem;
+    color: #666;
+    font-weight: 600;
+}
+
+.pagination-buttons {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.page-btn {
+    text-decoration: none;
+    color: var(--text-dark);
+    font-weight: 700;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    background: white;
+    border: 1px solid black;
+    border-radius: 50px;
+    box-shadow: 3px 3px 0px black;
+    transition: all 0.2s;
+}
+
+.page-btn:hover:not(.disabled) {
+    transform: translate(-1px, -1px);
+    box-shadow: 4px 4px 0px black;
+    background: var(--accent-purple);
+}
+
+.page-btn.disabled {
+    opacity: 0.3;
+    pointer-events: none;
+    box-shadow: none;
+    background: #eee;
+}
+
+.page-current {
+    font-weight: 800;
+    font-size: 0.9rem;
+    color: var(--sidebar-navy);
+}
